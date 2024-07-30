@@ -1,4 +1,4 @@
-#### Node js app with express, GraphQL, mongodb in database and docker for deploy
+#### Node js app with express, Swagger, mongodb in database and docker for deploY
 
 # Usage
 
