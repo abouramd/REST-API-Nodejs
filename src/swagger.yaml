@@ -1,0 +1,159 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "User API"
+paths:
+  /api/users:
+    get:
+      summary: "Get all users"
+      parameters:
+        - name: page
+          in: query
+          description: "Page number"
+          required: false
+          type: integer
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/User"
+        500:
+          description: "Error fetching data"
+          schema:
+            $ref: "#/definitions/Error"
+    post:
+      summary: "Create a new user"
+      parameters:
+        - name: user
+          in: body
+          description: "User object"
+          required: true
+          schema:
+            $ref: "#/definitions/UserChange"
+      responses:
+        201:
+          description: "User created"
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        400:
+          description: "Bad request"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Error adding data"
+          schema:
+            $ref: "#/definitions/Error"
+  /api/users/{id}:
+    get:
+      summary: "Get a user by ID"
+      parameters:
+        - name: id
+          in: path
+          description: "User ID"
+          required: true
+          type: integer
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/User"
+        404:
+          description: "User not found"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Error fetching data"
+          schema:
+            $ref: "#/definitions/Error"
+    patch:
+      summary: "Update a user by ID"
+      parameters:
+        - name: id
+          in: path
+          description: "User ID"
+          required: true
+          type: integer
+        - name: user
+          in: body
+          description: "User object"
+          required: true
+          schema:
+            $ref: "#/definitions/UserChange"
+      responses:
+        200:
+          description: "User data updated"
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        400:
+          description: "Bad request"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Error changing data"
+          schema:
+            $ref: "#/definitions/Error"
+    delete:
+      summary: "Delete a user by ID"
+      parameters:
+        - name: id
+          in: path
+          description: "User ID"
+          required: true
+          type: integer
+      responses:
+        200:
+          description: "User deleted successfully"
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        404:
+          description: "User not found"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Error deleting user"
+          schema:
+            $ref: "#/definitions/Error"
+definitions:
+  User:
+    type: object
+    properties:
+      id:
+        type: integer
+      first_name:
+        type: string
+      last_name:
+        type: string
+      email:
+        type: string
+      gender:
+        type: string
+      address:
+        type: string
+  UserChange:
+    type: object
+    properties:
+      first_name:
+        type: string
+      last_name:
+        type: string
+      email:
+        type: string
+      gender:
+        type: string
+      address:
+        type: string
+  Error:
+    type: object
+    properties:
+      message:
+        type: string
+  SuccessResponse:
+    type: object
+    properties:
+      message:
+        type: string
+      user:
+        $ref: "#/definitions/User"
+
